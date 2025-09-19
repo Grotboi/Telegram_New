@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Шрифт Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    display: ['Inter', 'system-ui', '-apple-system'],
+                    body: ['Inter', 'system-ui', '-apple-system'],
+                },
+                extend: {
+                    colors: {
+                        'telegram': '#0088cc',
+                        'telegram-hover': '#0078b8',
+                        'chat-bg': '#f0f2f5',
+                        'input-border': '#e0e0e0',
+                    },
+                    borderRadius: {
+                        'telegram': '14px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+        .auth-container {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjAuNSIgZmlsbD0iI2QxZDRkOSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2YwZjJmNSIvPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiLz48L3N2Zz4=');
+            background-size: cover;
+            background-position: center;
+        }
+        .auth-form {
+            background-color: rgba(255, 255, 255, 0.95); /* Полупрозрачный белый фон */
+            backdrop-filter: blur(10px); /* Эффект размытия фона */
+        }
+        .input-field:focus {
+            border-color: #0088cc; /* Цвет бордера при фокусе */
+            box-shadow: 0 0 0 2px rgba(0, 136, 204, 0.2); /* Тень при фокусе */
+        }
+    </style>
+</head>
+<body class="bg-chat-bg font-body flex items-center justify-center min-h-screen p-4 auth-container">
+    <div class="auth-form w-full max-w-md rounded-telegram shadow-xl overflow-hidden border border-gray-200">
+        <!-- Шапка формы -->
+        <div class="bg-telegram p-6 text-center">
+            <div class="w-16 h-16 rounded-full bg-white bg-opacity-20 flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-lock text-white text-2xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-white">Вход в TeleWeb</h2>
+            <p class="text-white text-opacity-80 mt-1">Пожалуйста, войдите в свой аккаунт</p>
+        </div>
+
+        <!-- Основная часть формы -->
+        <div class="p-6">
+            <form method="POST">
+                <!-- Поле логина -->
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700 text-sm font-medium mb-2">Имя пользователя</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            placeholder="Введите логин" 
+                            required
+                            class="input-field pl-10 w-full px-4 py-3 border border-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-telegram text-base transition duration-200"
+                        >
+                    </div>
+                </div>
+
+                <!-- Поле пароля -->
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 text-sm font-medium mb-2">Пароль</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Введите пароль" 
+                            required
+                            class="input-field pl-10 w-full px-4 py-3 border border-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-telegram text-base transition duration-200"
+                        >
+                    </div>
+                </div>
+
+                <!-- Сообщение об ошибке -->
+                {% if error %}
+                <div class="mb-4 p-3 bg-red-50 text-red-700 rounded-lg text-sm flex items-start">
+                    <i class="fas fa-exclamation-circle mt-0.5 mr-2 flex-shrink-0"></i>
+                    <span>{{ error }}</span>
+                </div>
+                {% endif %}
+
+                <!-- Кнопка входа -->
+                <button 
+                    type="submit"
+                    class="w-full py-3.5 bg-telegram hover:bg-telegram-hover text-white font-semibold rounded-lg shadow-md transition duration-200 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-telegram focus:ring-opacity-50 flex items-center justify-center"
+                >
+                    <i class="fas fa-sign-in-alt mr-2"></i> Войти
+                </button>
+            </form>
+
+            <!-- Ссылка на регистрацию -->
+            <div class="mt-6 text-center">
+                <p class="text-gray-600 text-sm">
+                    Нет аккаунта? 
+                    <a href="{{ url_for('register') }}" class="text-telegram font-semibold hover:underline">Зарегистрируйтесь</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
